@@ -118,7 +118,7 @@ class TrainLoop_fusion_rec():
         # should correctly initialize to floats or ints here
 
         self.metrics_rec={"recall@1":0,"recall@10":0,"recall@50":0,"loss":0,"count":0}
-        self.metrics_gen={"ppl":0,"dist1":0,"dist2":0,"dist3":0,"dist4":0,"bleu1":0,"bleu2":0,"bleu3":0,"bleu4":0,"count":0}
+        self.metrics_gen={"dist1":0,"dist2":0,"dist3":0,"dist4":0,"bleu1":0,"bleu2":0,"bleu3":0,"bleu4":0,"count":0}
 
         self.build_model(is_finetune)
 
@@ -388,7 +388,7 @@ class TrainLoop_fusion_gen():
         # should correctly initialize to floats or ints here
 
         self.metrics_rec={"recall@1":0,"recall@10":0,"recall@50":0,"loss":0,"count":0}
-        self.metrics_gen={"ppl":0,"dist1":0,"dist2":0,"dist3":0,"dist4":0,"bleu1":0,"bleu2":0,"bleu3":0,"bleu4":0,"count":0}
+        self.metrics_gen={"dist1":0,"dist2":0,"dist3":0,"dist4":0,"bleu1":0,"bleu2":0,"bleu3":0,"bleu4":0,"count":0}
 
         self.build_model(is_finetune=True)
 
@@ -445,16 +445,13 @@ class TrainLoop_fusion_gen():
                     losses=[]
                 num+=1
 
-            output_metrics_gen = self.val()
-            if best_val_gen < output_metrics_gen["ppl"] and False:
-                gen_stop=True
+            output_metrics_gen = self.val(True)
+            if best_val_gen < output_metrics_gen["dist4"]:
+                pass
             else:
-                best_val_gen = output_metrics_gen["ppl"]
+                best_val_gen = output_metrics_gen["dist4"]
                 self.model.save_model()
                 print("generator model saved once------------------------------------------------")
-
-            if gen_stop==True:
-                break
 
         _=self.val(is_test=True)
 
@@ -468,7 +465,7 @@ class TrainLoop_fusion_gen():
             val_dataset = dataset('data/valid_data.jsonl', self.opt)
         val_set=CRSdataset(val_dataset.data_process(True),self.opt['n_entity'],self.opt['n_concept'])
         val_dataset_loader = torch.utils.data.DataLoader(dataset=val_set,
-                                                           batch_size=1,#self.batch_size,
+                                                           batch_size=self.batch_size,
                                                            shuffle=False)
         inference_sum=[]
         golden_sum=[]
@@ -555,7 +552,7 @@ class TrainLoop_fusion_gen():
         predict_s=preds
         golden_s=responses
         #print(rec_loss[0])
-        self.metrics_gen["ppl"]+=sum([exp(ppl) for ppl in rec_loss])/len(rec_loss)
+        #self.metrics_gen["ppl"]+=sum([exp(ppl) for ppl in rec_loss])/len(rec_loss)
         generated=[]
 
         for out, tar, rec in zip(predict_s, golden_s, recs):
@@ -692,6 +689,7 @@ if __name__ == '__main__':
         loop=TrainLoop_fusion_gen(vars(args),is_finetune=True)
         #loop.train()
         loop.model.load_model()
+        #met = loop.val(True)
         loop.train()
     met=loop.val(True)
     #print(met)
