@@ -14,7 +14,7 @@ This model is trained by two steps, you should run the following code to pre-tra
 
 ```python run.py```
 
-Then you can run the following code to learn the conversation task, limitted by the small dataset, our model need about 30 epochs to covergence.
+Then you can run the following code to learn the conversation task. Limitted by the small dataset, Transformer model is difficult to coverge, so our model need many of epochs to covergence. Please be patient to train this model.
 
 ```python run.py --is_finetune True```
 
