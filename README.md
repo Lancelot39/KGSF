@@ -1,7 +1,9 @@
 # KGSF
 KDD2020 Improving Conversational Recommender Systems via Knowledge Graph based Semantic Fusion
+
 Conversational recommender system (CRS) aims to recommend proper items through interactive conversation, hence CRS needs to understand user preference from historical dialog, then produce recommendation and generate responses.
-![](./table1.png)
+<img src="./table1.png" width=400 height=240 />
+
 In this paper, we propose KGSF model, which first fuses the semantic between word-oriented and entity-oriented knowledge graph by mutual information maximization (MIM), then leverages the enhanced graph representation for item recommendation and response generation.
 ![](./figure1.png)
 
