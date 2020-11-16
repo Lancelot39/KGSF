@@ -1,5 +1,5 @@
 # KGSF
-KDD2020 Improving Conversational Recommender Systems via Knowledge Graph based Semantic Fusion
+***KDD2020 Improving Conversational Recommender Systems via Knowledge Graph based Semantic Fusion***
 
 Conversational recommender system (CRS) aims to recommend proper items through interactive conversation, hence CRS needs to understand user preference from historical dialog, then produce recommendation and generate responses.
 <img src="./table1.png" width=400 height=240 />
@@ -13,7 +13,7 @@ pytorch==1.3.0, torch_geometric==1.3.2
 To be honest, most of errors derive from the wrong installation of the two packages
 
 # Notation
-The word embedding file **word2vec_redial.npy** can be produced by the following function dataset.prepare_word2vec(), or directly download from the netdisk https://drive.google.com/file/d/1BzwGgbUBilaEZXAu7e1SlvxSwcAfVe2w/view?usp=sharing
+The word embedding file **word2vec_redial.npy** can be produced by the following function dataset.prepare_word2vec(), or directly download from the google netdisk https://drive.google.com/file/d/1BzwGgbUBilaEZXAu7e1SlvxSwcAfVe2w/view?usp=sharing, ***Chinese friends need VPN to download this file***.
 
 # Training
 This model is trained by two steps, you should run the following code to pre-train the parameters by Mutual Information Maximization and then learn the recommendation task. Based on my experience, it will converge after 3 epochs pre-training and 3 epochs fine-tuning.
